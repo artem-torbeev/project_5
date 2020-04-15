@@ -1,0 +1,45 @@
+<!doctype html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/css/main.css"/>
+
+    <title>Login</title>
+</head>
+<body>
+
+<div class="container-fluid bg">
+    <div class="row justify-content-center">
+        <div class="col-12 col-sm-6 col-md-3">
+
+            <form class="form-container" action="#" th:action="@{/login}" method="post">
+
+                <div class="alert alert-warning" role="alert" th:if="${param.error}">
+                    <strong>Invalid!</strong> username and password.
+                </div>
+
+                <h4 class="text-left">Please sing in</h4>
+
+                <input type="email" class="form-control" name="username" placeholder="Email address"
+                       aria-describedby="emailHelp" id="loginEmail">
+                <input type="password" class="form-control" name="password" placeholder="Password" id="loginPassword">
+
+                <div class="form-group form-check"></div>
+
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Sign in</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+<script type="text/javascript" src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/js/main.js"></script>
+</body>
+</html>

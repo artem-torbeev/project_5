@@ -1,0 +1,18 @@
+<html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+<head>
+    <title>403</title>
+</head>
+<body>
+
+<h2>Sorry, you do not have permission to view this page.</h2>
+
+<h3>Click <a th:href="@{/}">here</a> to go back to the Homepage.</h3>
+
+<div th:if="${#httpServletRequest.remoteUser != null}">
+    <p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</p>
+    <a th:href="@{/logout}">Logout</a>
+</div>
+
+</body>
+</html>

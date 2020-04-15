@@ -1,0 +1,70 @@
+<!DOCTYPE HTML>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org">
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+          integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <!--    home css-->
+    <link rel="stylesheet" th:href="@{/css/main.css}" href="/css/main.css"/>
+    <script type="text/javascript" th:href="@{/js/main.js}" src="/js/main.js"></script>
+    <title>User page</title>
+</head>
+<body>
+
+<!-- Navbar -->
+<nav class="navbar  navbar-expand-md bg-dark navbar-dark sticky-top text-white">
+
+    <div class="container-fluid">
+        <a class="navbar-brand" href="#">Project name</a>
+    </div>
+
+    <li class="nav">
+        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+    </li>
+</nav>
+
+<!-- body -->
+<div class="container-fluid my-container">
+    <div class="row my-row">
+
+        <div class="col-lg-2 col-md-2 my-col">
+
+            <div class="list-group-flush ">
+                <a th:href="@{/admin}" class="btn btn-outline-primary btn-lg btn-block my-btn" role="button"
+                   aria-pressed="true">Admin</a>
+            </div>
+            <div class="list-group-flush ">
+                <a th:href="@{/user}" class="btn btn-outline-primary btn-lg btn-block my-btn" role="button"
+                   aria-pressed="true">User</a>
+            </div>
+        </div>
+
+        <div class="col-lg-10 col-md-10 tx-col">
+            <!--подставить надпись через addAttribute()-->
+            <div class="text-page">
+                <h1>User page</h1>
+                <p></p>
+                <p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Optional JavaScript -->
+<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+        integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+        integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k"
+        crossorigin="anonymous"></script>
+</body>
+</html>
