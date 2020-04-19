@@ -1,6 +1,6 @@
 package com.application_client.client.restController;
 
-import com.application_client.client.model.User;
+import com.application_client.client.model.UserDto;
 import com.application_client.client.service.RestTemplateService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,12 +17,12 @@ public class ClientRestController {
     RestTemplateService restTemplateService;
 
     @GetMapping("/all")
-    public ResponseEntity<List<User>> showAllUser() {
+    public ResponseEntity<List<UserDto>> showAllUser() {
         return new ResponseEntity<>(restTemplateService.getAllUser(),HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createUser(@RequestBody User user) {
+    public ResponseEntity<Object> createUser(@RequestBody UserDto user) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -30,7 +30,7 @@ public class ClientRestController {
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Object> editUser(@RequestBody User user) {
+    public ResponseEntity<Object> editUser(@RequestBody UserDto user) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }

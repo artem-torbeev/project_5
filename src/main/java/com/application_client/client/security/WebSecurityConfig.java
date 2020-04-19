@@ -1,6 +1,6 @@
 package com.application_client.client.security;
 
-//import com.application_client.client.service.CustomerUserDetailsService;
+import com.application_client.client.service.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +16,9 @@ import org.springframework.security.web.authentication.AuthenticationSuccessHand
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    @Autowired
+    public CustomerUserDetailsService userDetailsService;
 
     @Bean
     public AuthenticationSuccessHandler authSuccessHandler() {
@@ -46,17 +49,12 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.csrf().disable();
     }
 
+
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
         auth
-                .inMemoryAuthentication()
-                .withUser("admin@com")
-                .password(getPasswordEncoder().encode("000"))
-                .roles("ADMIN")
-                .and()
-                .withUser("seva@com")
-                .password(getPasswordEncoder().encode("111"))
-                .roles("USER");
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(getPasswordEncoder());
     }
 
     @Override
@@ -66,4 +64,18 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**", "/static/**",
                         "/css/**", "/js/**", "/images/**");
     }
+
+    //    @Override
+//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+//        auth
+//                .inMemoryAuthentication()
+//                .withUser("admin@com")
+//                .password(getPasswordEncoder().encode("000"))
+//                .roles("ADMIN")
+//                .and()
+//                .withUser("seva@com")
+//                .password(getPasswordEncoder().encode("111"))
+//                .roles("USER");
+//    }
+
 }

@@ -2,25 +2,19 @@ jQuery(document).ready(function ($) {
 
     get_all_users();
 
-    // login User
-    // jQuery("#loginBtn").click(function (e) {
-    //     e.preventDefault();
-    //     let user = {
-    //         "email": $("#loginEmail").val(),
-    //         "password": $("#loginPassword").val(),
-    //     };
-    //     login_user(user);
-    //     $("#creat")[0].reset();
-    // });
-
     // создание User
     jQuery("#addBtn").click(function (e) {
         e.preventDefault();
+        let role = [];
+        let email = $("#addEmail").val();
+        let username = $("#addLogin").val();
+        let password = $("#addPassword").val();
+        role.push($("#addRole").val());
         let user = {
-            "email": $("#addEmail").val(),
-            "username": $("#addLogin").val(),
-            "password": $("#addPassword").val(),
-            // "role": $("#addRole").val()
+            "email": email,
+            "username": username,
+            "password": password,
+            "role": role
         };
         create_user(user);
         $("#creat")[0].reset();
@@ -29,12 +23,18 @@ jQuery(document).ready(function ($) {
     // изменения user
     jQuery("#editBtn").click(function (e) {
         e.preventDefault();
+        let role = [];
+        let id = $("#editId").val();
+        let email = $("#editEmail").val();
+        let username = $("#editLogin").val();
+        let password = $("#editPassword").val();
+        role.push($("#editRole").val());
         let user = {
-            "id": $("#editId").val(),
-            "email": $("#editEmail").val(),
-            "username": $("#editLogin").val(),
-            "password": $("#editPassword").val(),
-            // "role": $("#editRole").val()
+            "id": id,
+            "email": email,
+            "username": username,
+            "password": password,
+            "role": role
         };
         edit_user(user);
         $("#edit")[0].reset();
@@ -60,7 +60,7 @@ function get_all_users() {
             for (let i = 0; i < result.length; i++) {
 
                 tr.push(`<tr><td>${result[i].id}</td>`);
-                tr.push(`<td>${result[i].role.map(role => role.role)}</td>`);
+                tr.push(`<td>${result[i].role[0]}</td>`);
                 tr.push(`<td>${result[i].username}</td>`);
                 tr.push(`<td>${result[i].password}</td>`);
                 tr.push(`<td>${result[i].email}</td>`);
@@ -118,24 +118,6 @@ function create_user(user) {
 
 }
 
-// login user
-function login_user(user) {
-    $.ajax({
-        type: 'POST',
-        url: '/login',
-        contentType: 'application/json; charset=utf-8',
-        data: JSON.stringify(user),
-        dataType: 'json',
-        cache: false,
-        async: false
-        // success: function () {
-        // },
-        // error: function (xhr, status, error) {
-        //     alert('Error - ' + xhr.status + ': ' + xhr.statusText);
-        // }
-    });
-}
-
 // заполнение модального окна
 function fill_modal_form(id) {
     $.ajax({
@@ -147,7 +129,7 @@ function fill_modal_form(id) {
             $('#editModal #editId').val(data.id);
             $('#editModal #editEmail').val(data.email);
             $('#editModal #editLogin').val(data.username);
-            $('#editModal #editRole').val(data.role.map(role => role.role));
+            $('#editModal #editRole').val(data.role[0]);
         },
         error: function (xhr, status, error) {
             alert('Error - ' + xhr.status + ': ' + xhr.statusText);
