@@ -1,5 +1,6 @@
 package com.application_client.client.security;
 
+
 import com.application_client.client.service.CustomerUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,19 +12,12 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
-
     @Autowired
-    public CustomerUserDetailsService userDetailsService;
-
-    @Bean
-    public AuthenticationSuccessHandler authSuccessHandler() {
-        return new CustomAuthenticationSuccessHandler();
-    }
+    private CustomerUserDetailsService userDetailsService;
 
     @Bean
     public PasswordEncoder getPasswordEncoder() {
@@ -38,7 +32,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.formLogin()
                 .loginPage("/login")
                 .loginProcessingUrl("/login")
-                .successHandler(authSuccessHandler())
+                .defaultSuccessUrl("/user", true)
                 .and()
                 .exceptionHandling().accessDeniedPage("/access_denied");
         http.logout()
@@ -47,8 +41,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID");
         http.csrf().disable();
-    }
 
+    }
 
     @Override
     protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -64,8 +58,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/resources/**", "/static/**",
                         "/css/**", "/js/**", "/images/**");
     }
+}
 
-    //    @Override
+
+/*              .and()
+                .addFilterBefore(new CustomAuthenticationFilter(authenticationManager)),
+                UsernamePasswordAuthenticationFilter.class)*/
+
+//        @Override
 //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 //        auth
 //                .inMemoryAuthentication()
@@ -78,4 +78,4 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 //                .roles("USER");
 //    }
 
-}
+

@@ -7,7 +7,7 @@
 
 <h2>Sorry, you do not have permission to view this page.</h2>
 
-<h3>Click <a th:href="@{/}">here</a> to go back to the Homepage.</h3>
+<h3>Click <a th:href="@{/login}">here</a> to go back to the Homepage.</h3>
 
 <div th:if="${#httpServletRequest.remoteUser != null}">
     <p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</p>
