@@ -2,24 +2,19 @@ package com.application_client.client.service;
 
 import com.application_client.client.model.UserDto;
 import com.application_client.client.model.UserJwt;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
-import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class RestTemplateService {
-    @Autowired
-    private HttpSession httpSession;
-
-    RestTemplate restTemplate = new RestTemplate();
     final private String URL = "http://localhost:8085/admin/";
-//    private String authToken;
+    private String token;
+    RestTemplate restTemplate = new RestTemplate();
 
     public ResponseEntity<UserJwt> signIn(UserJwt user) {
 
@@ -28,19 +23,12 @@ public class RestTemplateService {
         UserJwt response = restTemplate.postForObject(URL_LOGIN, userJwt, UserJwt.class);
         //todo получить токен из ответа
         if (response != null) {
-            String authToken = (String) response.getModel().get("token");
-            //todo установить токен в сессию
-            httpSession.setAttribute("cookies", authToken);
-
+            token = (String) response.getModel().get("token");
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     public List<UserDto> getAllUser() {
-        //todo получение токена из сессии
-        String token = (String)httpSession.getAttribute("cookies");
-        System.out.println("THIS IS TOKEN getAllUser() >>>" + token);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.add("Authorization", "Bearer " + token);
@@ -53,10 +41,6 @@ public class RestTemplateService {
     }
 
     public UserDto createUser(UserDto user) {
-        //todo получение токена из сессии
-        String token = (String)httpSession.getAttribute("cookies");
-        System.out.println("THIS IS TOKEN createUser() >>>" + token);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.add("Authorization", "Bearer " + token);
@@ -69,10 +53,6 @@ public class RestTemplateService {
     }
 
     public UserDto updateUser(UserDto user) {
-        //todo получение токена из сессии
-        String token = (String)httpSession.getAttribute("cookies");
-        System.out.println("THIS IS TOKEN updateUser() >>>" + token);
-
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.add("Authorization", "Bearer " + token);
@@ -84,9 +64,6 @@ public class RestTemplateService {
     }
 
     public UserDto getUser(Long id) {
-        //todo получение токена из сессии
-        String token = (String)httpSession.getAttribute("cookies");
-
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.add("Authorization", "Bearer " + token);
@@ -98,9 +75,6 @@ public class RestTemplateService {
     }
 
     public void deleteUser(Long id) {
-        //todo получение токена из сессии
-        String token = (String)httpSession.getAttribute("cookies");
-
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
         headers.add("Authorization", "Bearer " + token);
@@ -110,15 +84,3 @@ public class RestTemplateService {
     }
 }
 
-
-/*
-*         Authentication authentication = authenticationUser.getAuthentication();
-        if (!(authentication instanceof AnonymousAuthenticationToken)) {
-            String currentUserName = authentication.getName();
-            System.out.println("USER_NAME_CURRENT " + currentUserName);
-            UserDetails user = detailsService.loadUserByUsername(currentUserName);
-            assert user != null;
-            System.out.println("USER_NAME " + user.getUsername());
-            System.out.println("USER_PASSWORD " + user.getPassword().substring(6));
-            System.out.println("USER_ROLE " + user.getAuthorities());
-        }*/

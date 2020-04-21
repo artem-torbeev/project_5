@@ -2,7 +2,6 @@ package com.application_client.client.restController;
 
 import com.application_client.client.model.UserDto;
 import com.application_client.client.service.RestTemplateService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,10 +10,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/admin")
-public class ClientRestController {
+public class AdminRestController {
 
-    @Autowired
-    RestTemplateService restTemplateService;
+    final RestTemplateService restTemplateService;
+
+    public AdminRestController(RestTemplateService restTemplateService) {
+        this.restTemplateService = restTemplateService;
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> showAllUser() {

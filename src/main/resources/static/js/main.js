@@ -71,7 +71,7 @@ function get_all_users() {
             $("#table-user .userList").html($(tr.join('')));
         },
         error: function (xhr, status, error) {
-            alert('Error - ' + xhr.status + ': ' + xhr.statusText);
+            alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
         }
 
     });
@@ -92,7 +92,7 @@ function edit_user(user) {
             get_all_users();
         },
         error: function (xhr, status, error) {
-            alert('Error - ' + xhr.status + ': ' + xhr.statusText);
+            alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
         }
     });
 }
@@ -112,7 +112,7 @@ function create_user(user) {
             get_all_users();
         },
         error: function (xhr, status, error) {
-            alert('Error - ' + xhr.status + ': ' + xhr.statusText);
+            alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
         }
     });
 
@@ -132,7 +132,7 @@ function fill_modal_form(id) {
             $('#editModal #editRole').val(data.role[0]);
         },
         error: function (xhr, status, error) {
-            alert('Error - ' + xhr.status + ': ' + xhr.statusText);
+            alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
         }
     });
 }

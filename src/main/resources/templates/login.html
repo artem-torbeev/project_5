@@ -6,10 +6,16 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="/webjars/bootstrap/4.2.1/css/bootstrap.min.css"/>
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 
     <title>Login</title>
+    <script language="javascript" type="text/javascript">
+        function transfer_value_page() {
+            localStorage.setItem("email", document.getElementById("loginEmail").value)
+            return false;
+        }
+    </script>
 </head>
 <body>
 
@@ -17,7 +23,7 @@
     <div class="row justify-content-center">
         <div class="col-12 col-sm-6 col-md-3">
 
-            <form class="form-container" action="#" th:action="@{/login}" method="post">
+            <form class="form-container" action="#" method="post" id="login">
 
                 <div class="alert alert-warning" role="alert" th:if="${param.error}">
                     <strong>Invalid!</strong> username and password.
@@ -31,7 +37,9 @@
 
                 <div class="form-group form-check"></div>
 
-                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">Sign in</button>
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn" onclick="transfer_value_page()">
+                    Sign in
+                </button>
 
             </form>
         </div>

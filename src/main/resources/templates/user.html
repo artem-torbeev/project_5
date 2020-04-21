@@ -13,8 +13,14 @@
     <link rel="stylesheet" th:href="@{/css/main.css}" href="/css/main.css"/>
     <script type="text/javascript" th:href="@{/js/main.js}" src="/js/main.js"></script>
     <title>User page</title>
+
+    <script language="javascript" type="text/javascript">
+        function insert_value() {
+            document.getElementById("email").innerHTML = localStorage.getItem("email");
+        }
+    </script>
 </head>
-<body>
+<body onload="insert_value()">
 
 <!-- Navbar -->
 <nav class="navbar  navbar-expand-md bg-dark navbar-dark sticky-top text-white">
@@ -49,7 +55,7 @@
             <div class="text-page">
                 <h1>User page</h1>
                 <p></p>
-                <p th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</p>
+                <p> Hello <span id="email"></span> !</p>
             </div>
 
         </div>
