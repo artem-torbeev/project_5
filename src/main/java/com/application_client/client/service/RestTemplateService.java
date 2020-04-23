@@ -2,19 +2,26 @@ package com.application_client.client.service;
 
 import com.application_client.client.model.UserDto;
 import com.application_client.client.model.UserJwt;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
+import javax.servlet.http.HttpSession;
 import java.util.Collections;
 import java.util.List;
 
 @Service
 public class RestTemplateService {
+    final HttpSession session;
+    final RestTemplate restTemplate;
     final private String URL = "http://localhost:8085/admin/";
-    private String token;
-    RestTemplate restTemplate = new RestTemplate();
+
+    public RestTemplateService(HttpSession session, RestTemplate restTemplate) {
+        this.session = session;
+        this.restTemplate = restTemplate;
+    }
 
     public ResponseEntity<UserJwt> signIn(UserJwt user) {
 
@@ -23,7 +30,9 @@ public class RestTemplateService {
         UserJwt response = restTemplate.postForObject(URL_LOGIN, userJwt, UserJwt.class);
         //todo получить токен из ответа
         if (response != null) {
-            token = (String) response.getModel().get("token");
+            String token = (String) response.getModel().get("token");
+            session.setAttribute("token", token);
+//            System.out.println ( "TOKEN === >>> " + session.getAttribute("token"));
         }
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -31,7 +40,7 @@ public class RestTemplateService {
     public List<UserDto> getAllUser() {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add("Authorization", "Bearer " + token);
+        headers.add("Authorization", "Bearer " + session.getAttribute("token"));
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<List<UserDto>> response = restTemplate.exchange(URL + "all", HttpMethod.GET,
@@ -43,7 +52,7 @@ public class RestTemplateService {
     public UserDto createUser(UserDto user) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add("Authorization", "Bearer " + token);
+        headers.add("Authorization", "Bearer " + session.getAttribute("token"));
         // передаем
         HttpEntity<UserDto> entity = new HttpEntity<>(user, headers);
         //получаем
@@ -55,7 +64,7 @@ public class RestTemplateService {
     public UserDto updateUser(UserDto user) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add("Authorization", "Bearer " + token);
+        headers.add("Authorization", "Bearer " + session.getAttribute("token"));
 
         HttpEntity<UserDto> entity = new HttpEntity<>(user, headers);
         ResponseEntity<UserDto> response = restTemplate
@@ -66,7 +75,7 @@ public class RestTemplateService {
     public UserDto getUser(Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add("Authorization", "Bearer " + token);
+        headers.add("Authorization", "Bearer " + session.getAttribute("token"));
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         ResponseEntity<UserDto> response = restTemplate
@@ -77,7 +86,7 @@ public class RestTemplateService {
     public void deleteUser(Long id) {
         HttpHeaders headers = new HttpHeaders();
         headers.setAccept(Collections.singletonList(MediaType.APPLICATION_JSON));
-        headers.add("Authorization", "Bearer " + token);
+        headers.add("Authorization", "Bearer " + session.getAttribute("token"));
 
         HttpEntity<String> entity = new HttpEntity<>(headers);
         restTemplate.exchange(URL + id, HttpMethod.DELETE, entity, UserDto.class);

@@ -29,7 +29,11 @@ function authorization_user(user) {
             // alert("Authorization...")
         },
         error: function (xhr, status, error) {
-            alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
+            if (xhr.status === 500||xhr.status===204) {
+                alert('Not a valid login or password...');
+            } else {
+                alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
+            }
         }
     });
 }

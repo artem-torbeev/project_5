@@ -71,7 +71,12 @@ function get_all_users() {
             $("#table-user .userList").html($(tr.join('')));
         },
         error: function (xhr, status, error) {
-            alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
+            if (xhr.status === 500||xhr.status === 403) {
+                alert('You do not have access rights...');
+            } else {
+                alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
+            }
+
         }
 
     });
@@ -112,7 +117,11 @@ function create_user(user) {
             get_all_users();
         },
         error: function (xhr, status, error) {
-            alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
+            if (xhr.status === 500||xhr.status === 403) {
+                alert('You do not have access rights...');
+            } else {
+                alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
+            }
         }
     });
 

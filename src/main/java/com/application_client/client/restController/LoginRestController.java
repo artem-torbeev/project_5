@@ -24,9 +24,6 @@ public class LoginRestController {
 
     @PostMapping("/login")
     public void signIn(@RequestBody UserJwt userJwt) {
-
         restTemplateService.signIn(userJwt);
-
     }
-
 }
