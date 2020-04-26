@@ -2,6 +2,8 @@ package com.application_client.client.restController;
 
 import com.application_client.client.model.UserJwt;
 import com.application_client.client.service.RestTemplateService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -23,7 +25,7 @@ public class LoginRestController {
     }
 
     @PostMapping("/login")
-    public void signIn(@RequestBody UserJwt userJwt) {
-        restTemplateService.signIn(userJwt);
+    public ResponseEntity<Object> signIn(@RequestBody UserJwt userJwt) {
+        return new ResponseEntity<>(restTemplateService.signIn(userJwt), HttpStatus.OK);
     }
 }

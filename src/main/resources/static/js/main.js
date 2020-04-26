@@ -1,5 +1,5 @@
 jQuery(document).ready(function ($) {
-
+    // console.log('COOKIE MAIN == >> ' + get_cookie('email'));
     get_all_users();
 
     // создание User
@@ -53,6 +53,7 @@ function get_all_users() {
     $.ajax({
         type: "GET",
         url: "/admin/all",
+        xhrFields: { withCredentials: true },
         cache: false,
         async: false,
         success: function (result) {
@@ -65,7 +66,6 @@ function get_all_users() {
                 tr.push(`<td>${result[i].password}</td>`);
                 tr.push(`<td>${result[i].email}</td>`);
                 tr.push(`<td><button data-id=${result[i].id} type="button" class="btn btn-primary" data-toggle="modal" data-target="#editModal">Edit</button></td></tr>`);
-
             }
             //заменит содержимое тэга
             $("#table-user .userList").html($(tr.join('')));
@@ -76,9 +76,7 @@ function get_all_users() {
             } else {
                 alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
             }
-
         }
-
     });
 }
 
@@ -92,6 +90,7 @@ function edit_user(user) {
         dataType: 'json',
         cache: false,
         async: false,
+        xhrFields: { withCredentials: true },
         success: function () {
             // alert("EDIT");
             get_all_users();
@@ -112,6 +111,7 @@ function create_user(user) {
         dataType: 'json',
         cache: false,
         async: false,
+        xhrFields: { withCredentials: true },
         success: function () {
             // alert("CREATE");
             get_all_users();
@@ -124,7 +124,6 @@ function create_user(user) {
             }
         }
     });
-
 }
 
 // заполнение модального окна
@@ -134,6 +133,7 @@ function fill_modal_form(id) {
         url: '/admin/' + id,
         cache: false,
         async: false,
+        xhrFields: { withCredentials: true },
         success: function (data) {
             $('#editModal #editId').val(data.id);
             $('#editModal #editEmail').val(data.email);
@@ -145,5 +145,7 @@ function fill_modal_form(id) {
         }
     });
 }
+
+
 
 

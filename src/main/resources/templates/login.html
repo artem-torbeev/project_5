@@ -10,12 +10,6 @@
     <link rel="stylesheet" type="text/css" href="/css/main.css"/>
 
     <title>Login</title>
-    <script language="javascript" type="text/javascript">
-        function transfer_value_page() {
-            localStorage.setItem("email", document.getElementById("loginEmail").value)
-            return false;
-        }
-    </script>
 </head>
 <body>
 
@@ -37,11 +31,15 @@
 
                 <div class="form-group form-check"></div>
 
-                <button type="submit" class="btn btn-primary btn-block" id="loginBtn" onclick="transfer_value_page()">
+                <button type="submit" class="btn btn-primary btn-block" id="loginBtn">
                     Sign in
                 </button>
 
             </form>
+
+            <div id="user">
+
+            </div>
         </div>
     </div>
 </div>
@@ -51,3 +49,4 @@
 <script type="text/javascript" src="/js/login.js"></script>
 </body>
 </html>
+

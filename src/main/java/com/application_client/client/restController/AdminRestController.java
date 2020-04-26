@@ -19,35 +19,39 @@ public class AdminRestController {
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<UserDto>> showAllUser() {
-        return new ResponseEntity<>(restTemplateService.getAllUser(),HttpStatus.OK);
+    public ResponseEntity<List<UserDto>> showAllUser(@CookieValue(value = "token", defaultValue = "not defined") String token) {
+        System.out.println("TOKEN === >>>" + token);
+        return new ResponseEntity<>(restTemplateService.getAllUser(token), HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<Object> createUser(@RequestBody UserDto user) {
+    public ResponseEntity<Object> createUser(@RequestBody UserDto user,
+                                             @CookieValue(value = "token", defaultValue = "not defined") String token) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(restTemplateService.createUser(user), HttpStatus.CREATED);
+        return new ResponseEntity<>(restTemplateService.createUser(user, token), HttpStatus.CREATED);
     }
 
     @PutMapping("/edit")
-    public ResponseEntity<Object> editUser(@RequestBody UserDto user) {
+    public ResponseEntity<Object> editUser(@RequestBody UserDto user,
+                                           @CookieValue(value = "token", defaultValue = "not defined") String token) {
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        return new ResponseEntity<>(restTemplateService.updateUser(user), HttpStatus.OK);
+        return new ResponseEntity<>(restTemplateService.updateUser(user, token), HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Object> getUser(@PathVariable Long id) {
-
-        return new ResponseEntity<>(restTemplateService.getUser(id), HttpStatus.OK);
+    public ResponseEntity<Object> getUser(@PathVariable Long id,
+                                          @CookieValue(value = "token", defaultValue = "not defined") String token) {
+        return new ResponseEntity<>(restTemplateService.getUser(id, token), HttpStatus.OK);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Object> deleteUser(@PathVariable Long id) {
-       restTemplateService.deleteUser(id);
+    public ResponseEntity<Object> deleteUser(@PathVariable Long id,
+                                             @CookieValue(value = "token", defaultValue = "not defined") String token) {
+        restTemplateService.deleteUser(id, token);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }
