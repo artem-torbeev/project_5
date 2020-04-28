@@ -1,6 +1,19 @@
 jQuery(document).ready(function ($) {
-    // console.log('COOKIE MAIN == >> ' + get_cookie('email'));
+
+    // заполнение таблицы
     get_all_users();
+
+    // logout
+    jQuery("#link-logout").click(function (e) {
+        e.preventDefault();
+
+        delete_cookie('email');
+        delete_cookie('token');
+        delete_cookie('role');
+        // redirect login
+        to_pass_page_login();
+    });
+
 
     // создание User
     jQuery("#addBtn").click(function (e) {
@@ -53,7 +66,7 @@ function get_all_users() {
     $.ajax({
         type: "GET",
         url: "/admin/all",
-        xhrFields: { withCredentials: true },
+        xhrFields: {withCredentials: true},
         cache: false,
         async: false,
         success: function (result) {
@@ -71,7 +84,7 @@ function get_all_users() {
             $("#table-user .userList").html($(tr.join('')));
         },
         error: function (xhr, status, error) {
-            if (xhr.status === 500||xhr.status === 403) {
+            if (xhr.status === 500 || xhr.status === 403) {
                 alert('You do not have access rights...');
             } else {
                 alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
@@ -90,9 +103,8 @@ function edit_user(user) {
         dataType: 'json',
         cache: false,
         async: false,
-        xhrFields: { withCredentials: true },
+        xhrFields: {withCredentials: true},
         success: function () {
-            // alert("EDIT");
             get_all_users();
         },
         error: function (xhr, status, error) {
@@ -111,14 +123,13 @@ function create_user(user) {
         dataType: 'json',
         cache: false,
         async: false,
-        xhrFields: { withCredentials: true },
+        xhrFields: {withCredentials: true},
         success: function () {
-            // alert("CREATE");
             get_all_users();
         },
         error: function (xhr, status, error) {
-            if (xhr.status === 500||xhr.status === 403) {
-                alert('You do not have access rights...');
+            if (xhr.status === 500 || xhr.status === 403) {
+                alert('Sorry, you do not have permission to view this page.');
             } else {
                 alert('Error - ' + xhr.status + ': ' + xhr.statusText + error);
             }
@@ -133,7 +144,7 @@ function fill_modal_form(id) {
         url: '/admin/' + id,
         cache: false,
         async: false,
-        xhrFields: { withCredentials: true },
+        xhrFields: {withCredentials: true},
         success: function (data) {
             $('#editModal #editId').val(data.id);
             $('#editModal #editEmail').val(data.email);
@@ -145,6 +156,7 @@ function fill_modal_form(id) {
         }
     });
 }
+
 
 
 

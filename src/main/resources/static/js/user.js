@@ -1,24 +1,38 @@
 jQuery(document).ready(function ($) {
 
     let name = get_cookie('email');
-    // console.log('COOKIE USER_NAME == >> ' + name);
-    insert_value(name);
+    if (name === ''){
+        insert_value('Unknown')
+    }else {
+        insert_value(name);
+    }
 
-    console.log('COOKIE LOGIN == >> ' + get_cookie('email'));
-    console.log('COOKIE TOKEN == >> ' + get_cookie('token'));
-    console.log(document.cookie);
+    // проверка role of user
+    jQuery("#admin-btn").click(function (e) {
+        e.preventDefault();
+        let role = get_cookie('role');
+        if (role === 'ROLE_ADMIN') {
+            to_pass_page_admin();
+        }else {
+            to_pass_page_403();
+        }
+    });
+
+    // logout
+    jQuery("#link-logout").click(function (e) {
+        e.preventDefault();
+
+        delete_cookie('email');
+        delete_cookie('token');
+        delete_cookie('role');
+        // redirect login
+        to_pass_page_login();
+    });
 
 });
+
 
 //устанавливает имя для преведствия
 function insert_value(value) {
     document.getElementById("email").innerHTML = value;
-}
-
-//возвращает куки с указанным name
-function get_cookie(name) {
-    let matches = document.cookie.match(new RegExp(
-        "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
-    ));
-    return matches ? decodeURIComponent(matches[1]) : undefined;
 }

@@ -20,7 +20,6 @@ public class AdminRestController {
 
     @GetMapping("/all")
     public ResponseEntity<List<UserDto>> showAllUser(@CookieValue(value = "token", defaultValue = "not defined") String token) {
-        System.out.println("TOKEN === >>>" + token);
         return new ResponseEntity<>(restTemplateService.getAllUser(token), HttpStatus.OK);
     }
 

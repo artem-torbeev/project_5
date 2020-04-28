@@ -18,8 +18,8 @@
         <a class="navbar-brand" href="#">Application</a>
     </div>
 
-    <li class="nav">
-        <a class="nav-link text-white" th:href="@{/logout}">Logout</a>
+    <li class="nav" >
+        <a class="nav-link text-white" id="link-logout" th:href="@{/logout}">Logout</a>
     </li>
 
 </nav>
@@ -33,7 +33,7 @@
 
             <div class="list-group-flush ">
                 <a th:href="@{/admin}" class="btn btn-outline-primary btn-lg btn-block my-btn" role="button"
-                   aria-pressed="true">Admin</a>
+                   aria-pressed="true" id="admin-btn">Admin</a>
             </div>
             <div class="list-group-flush ">
                 <a th:href="@{/user}" class="btn btn-outline-primary btn-lg btn-block my-btn" role="button"
@@ -267,6 +267,8 @@
 <script type="text/javascript" src="/webjars/jquery/3.4.1/jquery.min.js"></script>
 <script type="text/javascript" src="/webjars/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/js/main.js"></script>
+<script type="text/javascript" src="/js/cookie.js"></script>
+<script type="text/javascript" src="/js/redirect.js"></script>
 </body>
 </html>
 
